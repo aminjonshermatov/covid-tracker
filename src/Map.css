@@ -39,3 +39,18 @@
 .info-container {
     width: 150px;
 }
+
+.cases {
+    stroke: #CC1034;
+    fill: #CC1034;
+}
+
+.recovered {
+    stroke: #7dd71d;
+    fill: #7dd71d;
+}
+
+.deaths {
+    stroke: #fb4443;
+    fill: #fb4443;
+}

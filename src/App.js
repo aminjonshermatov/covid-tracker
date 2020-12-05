@@ -10,7 +10,7 @@ import './App.css';
 import InfoBox from './InfoBox';
 import Map from './Map';
 import Table from './Table';
-import { sortData, prettyPrintStat } from "./util";
+import { sortData, prettyPrintStat, showDataOnMap } from "./util";
 import LineGraph from './LineGraph';
 import "leaflet/dist/leaflet.css";
 
@@ -72,6 +72,8 @@ function App() {
       })
   };
 
+  const mapCircles = showDataOnMap(mapCountries, casesType);
+
   return (
     <div className="app">
       <div className="app__left">
@@ -85,8 +87,8 @@ function App() {
             >
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {
-                countries.map(({ name, value }) => (
-                  <MenuItem value={value}>{name}</MenuItem>
+                countries.map(({ name, value }, index) => (
+                  <MenuItem key={index} value={value}>{name}</MenuItem>
                 ))
               }
             </Select>
@@ -95,19 +97,19 @@ function App() {
 
         <div className="app__stats">
           <InfoBox
-            onClick={(e) => setCasesType('cases')}
+            onClick={() => setCasesType('cases')}
             title="Coronavirus Cases"
             cases={prettyPrintStat(countyInfo.todayCases)}
             total={prettyPrintStat(countyInfo.cases)}
           />
           <InfoBox
-            onClick={(e) => setCasesType('recovered')}
+            onClick={() => setCasesType('recovered')}
             title="Recovered"
             cases={prettyPrintStat(countyInfo.todayRecovered)}
             total={prettyPrintStat(countyInfo.recovered)}
           />
           <InfoBox
-            onClick={(e) => setCasesType('deaths')}
+            onClick={() => setCasesType('deaths')}
             title="Deaths"
             cases={prettyPrintStat(countyInfo.todayDeaths)}
             total={prettyPrintStat(countyInfo.deaths)}
@@ -115,10 +117,9 @@ function App() {
         </div>
 
         <Map
-          countries={mapCountries}
+          mapCircles={mapCircles}
           center={mapCenter}
           zoom={mapZoom}
-          casesType={casesType}
         />
       </div>
       <Card className="app_right">
